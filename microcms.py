@@ -100,14 +100,19 @@ class MicroCMS:
         }
         _logger.debug(f'params: {params}')
 
-        if id is None:
-            res = requests.post(endpoint, headers=headers, params=params)
-        else:
-            endpoint = urllib.parse.urljoin(f'{endpoint}/', id)
-            res = requests.put(endpoint, headers=headers, json=params)
+        try:
+            if id is None:
+                res = requests.post(endpoint, headers=headers, params=params)
+            else:
+                endpoint = urllib.parse.urljoin(f'{endpoint}/', id)
+                res = requests.put(endpoint, headers=headers, json=params)
 
-        _logger.debug(f'res: {res.text}')
-        res.raise_for_status()
+            _logger.debug(f'res: {res.text}')
+            res.raise_for_status()
+
+        except requests.exceptions.RequestException as e:
+            _logger.error(e)
+            return None
 
         return res.text
 
