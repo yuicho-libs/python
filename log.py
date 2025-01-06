@@ -5,9 +5,9 @@ def init(debug=False):
     logging.getLogger('').handlers.clear()
 
     disp_handler = logging.StreamHandler(sys.stdout)
-    format_str = '[%(module)s.%(funcName)s] %(levelname)s: %(message)s'
+    format_str = '[%(name)s-%(funcName)s] %(levelname)s: %(message)s'
     if debug:
-        format_str = '[%(module)s.%(funcName)s(ln:%(lineno)d)] %(levelname)s: %(message)s'
+        format_str = '[%(name)s - %(module)s.%(funcName)s(ln:%(lineno)d)] %(levelname)s: %(message)s'
     disp_handler.setFormatter( logging.Formatter(format_str) )
     disp_handler.setLevel( logging.DEBUG if debug else logging.INFO )
 
